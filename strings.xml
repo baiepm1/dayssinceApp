@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">days since</string>
+    <string name="sec">dopemz.dayssince.sec</string>
+    <string name="min">dopemz.dayssince.min</string>
+    <string name="hour">dopemz.dayssince.hour</string>
+    <string name="day">dopemz.dayssince.day</string>
+    <string name="year">dopemz.dayssince.year</string>
+    <string name="mytext">dopemz.dayssince.mytext</string>
+</resources>
