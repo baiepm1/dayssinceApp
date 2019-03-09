@@ -14,6 +14,8 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.Calendar;
 
+
+//***************************************************************************************MAIN***************************************************
 public class daysSince extends AppCompatActivity {
 
     private static final long START_TIME_IN_MILLIS = 600000000;   //10000 mins
@@ -32,9 +34,7 @@ public class daysSince extends AppCompatActivity {
     private TextView prac2;     //
     private TextView prac3;     //
     private TextView prac4;     //
-
     private TextView txt1;      //          need this for load 1
-
     private Button resettime;
     private Button newtime;
     private int seconds = 0;    //for updating clk
@@ -44,49 +44,14 @@ public class daysSince extends AppCompatActivity {
     private int years = 0;
     private Calendar myTime;
     private Calendar currentTime;
-
-    public static final String SHARED_PREFS = "SHAREDPrefs";
-    public static final String SEC_PREFS = "SECPrefs";
-    public static final String MIN_PREFS = "MINPrefs";
-    public static final String HOUR_PREFS = "HOURPrefs";
-    public static final String DAY_PREFS = "DAYPrefs";
-    public static final String YEAR_PREFS = "YEARPrefs";
-    public static final String myyears = "";
-    public static final String mydays = "";
-    public static final String myhours = "";
-    public static final String mymins = "";
-    public static final String mysecs = "";
-    public static final String mytxt = "";  //need this for load 2
-
-    private String text1;                   //need this for load 3
-    private String helloseconds;
-    private String hellomins;
-    private String hellohour;
-    private String helloday;
-    private String helloyear;
-
-
-
-
-
-
     private SharedPreferences mprefs;
     private SharedPreferences.Editor meditor;
 
-
-
-
-
-
-
-
-
+    //--------------------------------------------------------------------------------CREATE------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.days_since);
-
-        currentTime = Calendar.getInstance();
 
         days = findViewById(R.id.dsince);
         hours = findViewById(R.id.hsince);
@@ -97,30 +62,28 @@ public class daysSince extends AppCompatActivity {
         prac3 = findViewById(R.id.prac3);
         prac4 = findViewById(R.id.prac4);
         txt1 = findViewById(R.id.txt1);
-
-        prac1.setText("00");
-        prac2.setText("00");
-        prac3.setText("00");
-        prac4.setText("00");
-
         resettime = findViewById(R.id.resetbtn);
         newtime = findViewById(R.id.newbtn);
+
+       // prac1.setText("00");
+        //prac2.setText("00");
+       // prac3.setText("00");
+       // prac4.setText("00");
+
+        txt1.setText("");
 
         mprefs = PreferenceManager.getDefaultSharedPreferences(this);
         meditor = mprefs.edit();
 
+///----------------------------------
+        checkprefs();   //if there is data saved, run clock on app startup
+//-----------------------------------
 
-        checkprefs();
-
-        meditor.putString(mysecs, secs.getText().toString());
-        meditor.commit();
-        meditor.putString(mydays, days.getText().toString());
-        meditor.commit();
-
-        
         resettime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                clearData();
                 days.setText("0");
                 hours.setText("00");
                 mins.setText("00");
@@ -131,6 +94,7 @@ public class daysSince extends AppCompatActivity {
                 dayss = 0;
                 years = 0;
                 pauseTimer();
+                newtime.setText("NEW");
             }
         });
 
@@ -139,126 +103,95 @@ public class daysSince extends AppCompatActivity {
             public void onClick(View v) {
                 if (mTimerRunning) {
                     pauseTimer();
+                    newtime.setText("NEW");
                 } else {
+
                     myTime = Calendar.getInstance();
-/*
-                        years = myTime.get(Calendar.YEAR) - myTime.get(Calendar.YEAR);
-                        dayss = myTime.get(Calendar.DATE) - myTime.get(Calendar.DATE) + (365 * years);   //if difference in years is zero, add nothing. else do math to add days
-                        hourss =  (myTime.get(Calendar.HOUR_OF_DAY) - myTime.get(Calendar.HOUR_OF_DAY) + (24 * dayss)) % 24;
-                        minutes = (myTime.get(Calendar.MINUTE) - myTime.get(Calendar.MINUTE) + (60 * hourss)) % 60;
-                        seconds = (myTime.get(Calendar.SECOND) - myTime.get(Calendar.SECOND) + (60 * minutes)) % 60;   //%60 so value never overflow 60 or negative
-*/
+                    years = 0;
+                    dayss = 0;
+                    hourss = 0;
+                    minutes = 0;
+                    seconds = 0;
 
-                    years = myTime.get(Calendar.YEAR) - 2018;
-                    dayss = myTime.get(Calendar.DATE) - 42 + (365 * years);   //if difference in years is zero, add nothing. else do math to add days
-                    hourss = (myTime.get(Calendar.HOUR_OF_DAY) - 9 + (24 * dayss)) % 24;
-                    minutes = (myTime.get(Calendar.MINUTE) - 20 + (60 * hourss)) % 60;
-                    seconds = (myTime.get(Calendar.SECOND) - 16 + (60 * minutes)) % 60;   //%60 so value never overflow 60 or negative
-
-                    //updateTime();
-                    saveData();
+                    updateData();
                     startTimer();
+                    newtime.setText("STOP");
                 }
             }
         });
-
-
-        //loadData();
-        //updateData();
+        //savetxt();
     }
+//--------------------------------------------------------------------------------CREATE------------------------------------------------
+//***************************************************************************************MAIN***************************************************
 
+    public void checkprefs(){           //get values from mem, run if data is there
+        String year1 = mprefs.getString(getString(R.string.year), "");
+        String day1 = mprefs.getString(getString(R.string.day), "");
+        String hour1 = mprefs.getString(getString(R.string.hour), "");
+        String min1 = mprefs.getString(getString(R.string.min), "");
+        String sec1 = mprefs.getString(getString(R.string.sec), "");
+        String text1 = mprefs.getString(getString(R.string.mytext), "");
 
-    public void checkprefs(){
-        helloday = mprefs.getString(mydays, "");
-        helloseconds = mprefs.getString(mysecs, "");
+       // prac1.setText(day1);
+       // prac2.setText(hour1);
+       // prac3.setText(min1);
+       // prac4.setText(sec1);
 
-        prac1.setText(helloday);
-        prac2.setText(helloseconds);
+        txt1.setText(text1);
 
-
-    }
-
-    public void saveData() {
-      /* saveSec();
-       saveMin();
-       saveHour();
-       saveDay();*/
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(mysecs, secs.getText().toString());
-        editor.apply();
-        editor.putString(mymins, mins.getText().toString());
-        editor.apply();
-        editor.putString(myhours, hours.getText().toString());
-        editor.apply();
-        editor.putString(mydays, days.getText().toString());
-        editor.apply();
-    }/*
-        public void saveData(){
-       saveSec();
-       saveMin();
-       saveHour();
-       saveDay();
-}
-
-    public void saveSec(){
-        SharedPreferences sharedPreferences = getSharedPreferences(SEC_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(mysecs, secs.getText().toString());
-        editor.commit();
-    }
-    public void saveMin(){
-        SharedPreferences sharedPreferences = getSharedPreferences(MIN_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(mymins, mins.getText().toString());
-        editor.commit();
-    }
-    public void saveHour(){
-        SharedPreferences sharedPreferences = getSharedPreferences(HOUR_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(myhours, hours.getText().toString());
-        editor.commit();
-    }
-    public void saveDay(){
-        SharedPreferences sharedPreferences = getSharedPreferences(DAY_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(mydays, days.getText().toString());
-        editor.commit();
-    }
-    public void saveYear(){
-        SharedPreferences sharedPreferences = getSharedPreferences(YEAR_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(mysecs, secs.getText().toString());
-        editor.commit();
-    }
-*/
-    public void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-
-        //years = sharedPreferences.getInt(myyears, -1);
-        helloday = sharedPreferences.getString(mydays, "");
-        hellohour = sharedPreferences.getString(myhours, "");
-        hellomins = sharedPreferences.getString(mymins, "");
-        helloseconds = sharedPreferences.getString(mysecs, "");
-        //text1 = sharedPreferences.getString(mysecs, "");
-
-
-    }
-    public void updateData(){
-       // txt1.setText(helloseconds);
-        prac4.setText(helloseconds);
-        prac3.setText(hellomins);
-        prac2.setText(hellohour);
-        prac1.setText(helloday);
+        if(year1 != "" || day1 != "" || hour1 != "" || min1 != ""  || sec1 != "" ){
+            currentTime = Calendar.getInstance();
+            years = currentTime.get(Calendar.YEAR) - Integer.parseInt(String.valueOf(year1));
+            if(currentTime.get(Calendar.DAY_OF_YEAR) < Integer.parseInt(String.valueOf(day1))){
+                years = years - 1;
+                dayss = 365 + currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
+            }else{
+                dayss = currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
+            }
+            if(currentTime.get(Calendar.HOUR_OF_DAY) < Integer.parseInt(String.valueOf(hour1))){
+                dayss = dayss - 1;
+                hourss = 24 + currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
+            }else{
+                hourss = currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
+            }
+            if(currentTime.get(Calendar.MINUTE) < Integer.parseInt(String.valueOf(min1))){
+                hourss = hourss - 1;
+                minutes = 60 + currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
+            }else{
+                minutes = currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
+            }
+            if(currentTime.get(Calendar.SECOND) < Integer.parseInt(String.valueOf(sec1))){
+                minutes = minutes - 1;
+                seconds = 60 + currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
+            }else{
+                seconds = currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
+            }
+            //prac1.setText(Integer.toString(currentTime.get(Calendar.DAY_OF_YEAR)));
+            startTimer();
+            newtime.setText("STOP");
+        }else{
+            clearData();
+            days.setText("0");
+            hours.setText("00");
+            mins.setText("00");
+            secs.setText("00");
+            txt1.setText("");
+            seconds = 0;
+            minutes = 0;
+            hourss = 0;
+            dayss = 0;
+            years = 0;
+        }
     }
 
     private void startTimer() {
         mTimerRunning = true;
             countTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {  //do this for X mins
                 @Override
-                public void onTick(long millisUntilFinished) {
+                public void onTick(long millisUntilFinished) {      //this is what loops every second when timer is on
                     updateTime();
-                    seconds = seconds + 1;
+                    //savetxt();
+                    seconds = seconds + 1;                          //increment seconds every second
                 }
                 @Override
                 public void onFinish() {
@@ -267,14 +200,13 @@ public class daysSince extends AppCompatActivity {
             }.start();
     }
 
-
-    private void pauseTimer(){
+    private void pauseTimer(){          //hold values in txtboxes
         if (mTimerRunning){
             countTimer.cancel();
         }
         mTimerRunning = false;
     }
-    private void updateTime(){
+    private void updateTime(){          //update txtboxes
         if (Integer.parseInt(String.valueOf(secs.getText())) >= 59) {
             seconds = 0;
             minutes = minutes + 1;
@@ -287,24 +219,63 @@ public class daysSince extends AppCompatActivity {
                 }
             }
         }
-
         String secsleftformat = String.format("%02d", seconds);
         String minsleftformat = String.format("%02d", minutes);
         String hoursleftformat = String.format("%02d", hourss);
-
         secs.setText(secsleftformat);
         mins.setText(minsleftformat);
         hours.setText(hoursleftformat);
         days.setText(Integer.toString(dayss));
-
-        //prac1.setText(Integer.toString(myTime.get(Calendar.SECOND)));
-        saveData();
-
-/*
-        meditor.putString(mysecs, secs.getText().toString());
-        meditor.commit();
-        meditor.putString(mydays, days.getText().toString());
-        meditor.commit();*/
+        //updateData();
+        savetxt();
     }
+    private void updateData(){
+        //get times from mytime, txt from txtbox, save it to xml in mem
+        String year1 = Integer.toString(myTime.get(Calendar.YEAR));
+        meditor.putString(getString(R.string.year), year1);
+        meditor.commit();
 
+        String day1 = Integer.toString(myTime.get(Calendar.DAY_OF_YEAR));
+        meditor.putString(getString(R.string.day), day1);
+        meditor.commit();
+
+        String hour1 = Integer.toString(myTime.get(Calendar.HOUR_OF_DAY));
+        meditor.putString(getString(R.string.hour), hour1);
+        meditor.commit();
+
+        String min1 = Integer.toString(myTime.get(Calendar.MINUTE));
+        meditor.putString(getString(R.string.min), min1);
+        meditor.commit();
+
+        String sec1 = Integer.toString(myTime.get(Calendar.SECOND));
+        meditor.putString(getString(R.string.sec), sec1);
+        meditor.commit();
+    }
+    private void savetxt(){
+        String text1 = txt1.getText().toString();
+        meditor.putString(getString(R.string.mytext), text1);
+        meditor.apply();
+    }
+    private void clearData(){                       //replace saved data in mem with ""
+        meditor.putString(getString(R.string.year), "");
+        meditor.commit();
+
+        meditor.putString(getString(R.string.day), "");
+        meditor.commit();
+
+        meditor.putString(getString(R.string.hour), "");
+        meditor.commit();
+
+        meditor.putString(getString(R.string.min), "");
+        meditor.commit();
+
+        meditor.putString(getString(R.string.sec), "");
+        meditor.commit();
+
+        meditor.putString(getString(R.string.mytext), "");
+        meditor.commit();
+    }
 }
+
+
+
