@@ -119,7 +119,6 @@ public class daysSince extends AppCompatActivity {
                 }
             }
         });
-        //savetxt();
     }
 //--------------------------------------------------------------------------------CREATE------------------------------------------------
 //***************************************************************************************MAIN***************************************************
@@ -140,32 +139,7 @@ public class daysSince extends AppCompatActivity {
         txt1.setText(text1);
 
         if(year1 != "" || day1 != "" || hour1 != "" || min1 != ""  || sec1 != "" ){
-            currentTime = Calendar.getInstance();
-            years = currentTime.get(Calendar.YEAR) - Integer.parseInt(String.valueOf(year1));
-            if(currentTime.get(Calendar.DAY_OF_YEAR) < Integer.parseInt(String.valueOf(day1))){
-                years = years - 1;
-                dayss = 365 + currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
-            }else{
-                dayss = currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
-            }
-            if(currentTime.get(Calendar.HOUR_OF_DAY) < Integer.parseInt(String.valueOf(hour1))){
-                dayss = dayss - 1;
-                hourss = 24 + currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
-            }else{
-                hourss = currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
-            }
-            if(currentTime.get(Calendar.MINUTE) < Integer.parseInt(String.valueOf(min1))){
-                hourss = hourss - 1;
-                minutes = 60 + currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
-            }else{
-                minutes = currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
-            }
-            if(currentTime.get(Calendar.SECOND) < Integer.parseInt(String.valueOf(sec1))){
-                minutes = minutes - 1;
-                seconds = 60 + currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
-            }else{
-                seconds = currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
-            }
+            fillClk();
             //prac1.setText(Integer.toString(currentTime.get(Calendar.DAY_OF_YEAR)));
             startTimer();
             newtime.setText("STOP");
@@ -190,8 +164,6 @@ public class daysSince extends AppCompatActivity {
                 @Override
                 public void onTick(long millisUntilFinished) {      //this is what loops every second when timer is on
                     updateTime();
-                    //savetxt();
-                    seconds = seconds + 1;                          //increment seconds every second
                 }
                 @Override
                 public void onFinish() {
@@ -207,18 +179,9 @@ public class daysSince extends AppCompatActivity {
         mTimerRunning = false;
     }
     private void updateTime(){          //update txtboxes
-        if (Integer.parseInt(String.valueOf(secs.getText())) >= 59) {
-            seconds = 0;
-            minutes = minutes + 1;
-            if (Integer.parseInt(String.valueOf(mins.getText())) >= 59) {
-                minutes = 0;
-                hourss = hourss + 1;
-                if (Integer.parseInt(String.valueOf(hours.getText())) >= 23) {
-                    hourss = 0;
-                    dayss = dayss + 1;
-                }
-            }
-        }
+
+        fillClk();
+
         String secsleftformat = String.format("%02d", seconds);
         String minsleftformat = String.format("%02d", minutes);
         String hoursleftformat = String.format("%02d", hourss);
@@ -226,7 +189,6 @@ public class daysSince extends AppCompatActivity {
         mins.setText(minsleftformat);
         hours.setText(hoursleftformat);
         days.setText(Integer.toString(dayss));
-        //updateData();
         savetxt();
     }
     private void updateData(){
@@ -275,6 +237,42 @@ public class daysSince extends AppCompatActivity {
         meditor.putString(getString(R.string.mytext), "");
         meditor.commit();
     }
+    private void fillClk(){
+        String year1 = mprefs.getString(getString(R.string.year), "");
+        String day1 = mprefs.getString(getString(R.string.day), "");
+        String hour1 = mprefs.getString(getString(R.string.hour), "");
+        String min1 = mprefs.getString(getString(R.string.min), "");
+        String sec1 = mprefs.getString(getString(R.string.sec), "");
+
+        currentTime = Calendar.getInstance();
+        years = currentTime.get(Calendar.YEAR) - Integer.parseInt(String.valueOf(year1));
+        if(currentTime.get(Calendar.DAY_OF_YEAR) < Integer.parseInt(String.valueOf(day1))){
+            years = years - 1;
+            dayss = 365 + currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
+        }else{
+            dayss = currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
+        }
+        if(currentTime.get(Calendar.HOUR_OF_DAY) < Integer.parseInt(String.valueOf(hour1))){
+            dayss = dayss - 1;
+            hourss = 24 + currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
+        }else{
+            hourss = currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
+        }
+        if(currentTime.get(Calendar.MINUTE) < Integer.parseInt(String.valueOf(min1))){
+            hourss = hourss - 1;
+            minutes = 60 + currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
+        }else{
+            minutes = currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
+        }
+        if(currentTime.get(Calendar.SECOND) < Integer.parseInt(String.valueOf(sec1))){
+            minutes = minutes - 1;
+            seconds = 60 + currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
+        }else{
+            seconds = currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
+        }
+
+    }
+
 }
 
 
