@@ -47,6 +47,10 @@ public class daysSince extends AppCompatActivity {
     private SharedPreferences mprefs;
     private SharedPreferences.Editor meditor;
 
+    private daysClass[] mme = new daysClass[50];
+    //mme[0] = new daysClass();
+
+
     //--------------------------------------------------------------------------------CREATE------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +68,11 @@ public class daysSince extends AppCompatActivity {
         txt1 = findViewById(R.id.txt1);
         resettime = findViewById(R.id.resetbtn);
         newtime = findViewById(R.id.newbtn);
+
+       // daysClass[] mme = new daysClass[50];
+        //mme[0] = new daysClass(txt1, prac1, prac2, prac3, prac4, resettime, newtime, dayss, hourss, minutes, seconds);
+        mme[0] = new daysClass(txt1, prac1, prac2, prac3, prac4, resettime, newtime, dayss, hourss, minutes, seconds);
+
 
        // prac1.setText("00");
         //prac2.setText("00");
@@ -181,7 +190,8 @@ public class daysSince extends AppCompatActivity {
     private void updateTime(){          //update txtboxes
 
         fillClk();
-
+        mme[0].updatenums(dayss, hourss, minutes, seconds);
+        mme[0].setTime();
         String secsleftformat = String.format("%02d", seconds);
         String minsleftformat = String.format("%02d", minutes);
         String hoursleftformat = String.format("%02d", hourss);
