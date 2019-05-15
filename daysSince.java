@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +19,7 @@ import java.util.Calendar;
 
 
 //***************************************************************************************MAIN***************************************************
-public class daysSince extends AppCompatActivity {
+public class daysSince extends AppCompatActivity implements View.OnClickListener, exampledialog.exdialoglistener{
 
     private static final long START_TIME_IN_MILLIS = 600000000;   //10000 mins
     //    private static final long START_TIME_IN_MILLIS = 60000;   //1 mins
@@ -29,7 +32,7 @@ public class daysSince extends AppCompatActivity {
     private TextView hours;
     private TextView mins;
     private TextView secs;
-
+    private TextView currnum;
     private TextView prac1;     //
     private TextView prac2;     //
     private TextView prac3;     //
@@ -37,6 +40,7 @@ public class daysSince extends AppCompatActivity {
     private TextView txt1;      //          need this for load 1
     private Button resettime;
     private Button newtime;
+    private Button add;
     private int seconds = 0;    //for updating clk
     private int minutes = 0;    //for updating clk
     private int hourss = 0;     //for updating clk
@@ -46,17 +50,30 @@ public class daysSince extends AppCompatActivity {
     private Calendar currentTime;
     private SharedPreferences mprefs;
     private SharedPreferences.Editor meditor;
+    //private int numOfTimers = 0;
+    private int pracnums = 0;
+    private ScrollView scroll;
+    private LinearLayout layout1;
+    private LinearLayout layout2;
 
     private daysClass[] mme = new daysClass[50];
     //mme[0] = new daysClass();
+    private pracClass[] prac = new pracClass[10];
 
+    private int testingnum = 0;
+    private TextView practextpop;
+    private Button pracbuttonpop;
 
-    //--------------------------------------------------------------------------------CREATE------------------------------------------------
+    //--------------------------------------------------------------------------------ONCREATE------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.days_since);
 
+        scroll = findViewById(R.id.myscroll);
+        layout1 = findViewById(R.id.mylayout1);
+        layout2 = findViewById(R.id.mylayout2);
+        add = findViewById(R.id.add);
         days = findViewById(R.id.dsince);
         hours = findViewById(R.id.hsince);
         mins = findViewById(R.id.msince);
@@ -68,6 +85,8 @@ public class daysSince extends AppCompatActivity {
         txt1 = findViewById(R.id.txt1);
         resettime = findViewById(R.id.resetbtn);
         newtime = findViewById(R.id.newbtn);
+        currnum = findViewById(R.id.currentnum);
+
 
        // daysClass[] mme = new daysClass[50];
         //mme[0] = new daysClass(txt1, prac1, prac2, prac3, prac4, resettime, newtime, dayss, hourss, minutes, seconds);
@@ -87,7 +106,40 @@ public class daysSince extends AppCompatActivity {
 ///----------------------------------
         checkprefs();   //if there is data saved, run clock on app startup
 //-----------------------------------
+/*
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //numOfTimers++;
+                //currnum.setText(Integer.toString(numOfTimers));
+                pracnums++;
+                currnum.setText(Integer.toString(pracnums));
+                int[] gay = new int[100];
+                gay[pracnums] = pracnums;
 
+                TextView practext = new TextView(daysSince.this);
+                practext.setText(Integer.toString(pracnums));
+
+                Button pracbtn = new Button(daysSince.this);
+                pracbtn.setOnClickListener(this);
+                pracbtn.setText("edit" + Integer.toString(pracnums));
+                pracbtn.setWidth(200);
+                pracbtn.setId(pracnums);
+                prac[pracnums] = new pracClass(pracnums, pracbtn);
+
+                LinearLayout horz = new LinearLayout(daysSince.this);
+                horz.setHorizontalGravity(1);
+
+                //prac[pracnums] = new pracClass();
+                horz.addView(practext);
+                horz.addView(pracbtn);
+                layout1.addView(horz);
+
+            }
+        });
+*/
+
+/*
         resettime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +158,9 @@ public class daysSince extends AppCompatActivity {
                 newtime.setText("NEW");
             }
         });
+*/
 
+/*
         newtime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +182,11 @@ public class daysSince extends AppCompatActivity {
                 }
             }
         });
+        */
+
+        add.setOnClickListener(this);
+        resettime.setOnClickListener(this);
+        newtime.setOnClickListener(this);
     }
 //--------------------------------------------------------------------------------CREATE------------------------------------------------
 //***************************************************************************************MAIN***************************************************
@@ -139,6 +198,7 @@ public class daysSince extends AppCompatActivity {
         String min1 = mprefs.getString(getString(R.string.min), "");
         String sec1 = mprefs.getString(getString(R.string.sec), "");
         String text1 = mprefs.getString(getString(R.string.mytext), "");
+        String timernum = mprefs.getString(getString(R.string.num), "0");
 
        // prac1.setText(day1);
        // prac2.setText(hour1);
@@ -146,6 +206,8 @@ public class daysSince extends AppCompatActivity {
        // prac4.setText(sec1);
 
         txt1.setText(text1);
+       // numOfTimers = Integer.parseInt(timernum);
+       // currnum.setText(Integer.toString(numOfTimers));
 
         if(year1 != "" || day1 != "" || hour1 != "" || min1 != ""  || sec1 != "" ){
             fillClk();
@@ -166,7 +228,6 @@ public class daysSince extends AppCompatActivity {
             years = 0;
         }
     }
-
     private void startTimer() {
         mTimerRunning = true;
             countTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {  //do this for X mins
@@ -180,7 +241,6 @@ public class daysSince extends AppCompatActivity {
                 }
             }.start();
     }
-
     private void pauseTimer(){          //hold values in txtboxes
         if (mTimerRunning){
             countTimer.cancel();
@@ -227,6 +287,10 @@ public class daysSince extends AppCompatActivity {
         String text1 = txt1.getText().toString();
         meditor.putString(getString(R.string.mytext), text1);
         meditor.apply();
+
+        //String timernum = Integer.toString(numOfTimers);
+       // meditor.putString(getString(R.string.num), timernum);
+        //meditor.apply();
     }
     private void clearData(){                       //replace saved data in mem with ""
         meditor.putString(getString(R.string.year), "");
@@ -253,6 +317,8 @@ public class daysSince extends AppCompatActivity {
         String hour1 = mprefs.getString(getString(R.string.hour), "");
         String min1 = mprefs.getString(getString(R.string.min), "");
         String sec1 = mprefs.getString(getString(R.string.sec), "");
+
+        //currnum.setText(Integer.toString(numOfTimers));
 
         currentTime = Calendar.getInstance();
         years = currentTime.get(Calendar.YEAR) - Integer.parseInt(String.valueOf(year1));
@@ -283,6 +349,89 @@ public class daysSince extends AppCompatActivity {
 
     }
 
+
+    //----------------------------------functionality for all the buttons-------------------------------------
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //edit buttons for all the different timers: open the details with openDialog(). pass details into dialog
+            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+                openDialog();
+                Toast.makeText(this, Integer.toString(prac[v.getId()].getnum()), Toast.LENGTH_SHORT).show();
+                break;
+            //"add new" button: adds a new timer with details and edit button
+            case R.id.add:
+                pracnums++;
+                currnum.setText(Integer.toString(pracnums));
+               // int[] gay = new int[100];
+               // gay[pracnums] = pracnums;
+
+                TextView practext = new TextView(daysSince.this);
+                practext.setText(Integer.toString(pracnums));
+
+                Button pracbtn = new Button(daysSince.this);
+                pracbtn.setOnClickListener(this);
+                pracbtn.setText("edit" + Integer.toString(pracnums));
+                pracbtn.setWidth(200);
+                pracbtn.setId(pracnums);
+                pracbtn.setOnClickListener(this);
+                prac[pracnums] = new pracClass(pracnums, pracbtn);
+
+                LinearLayout horz = new LinearLayout(daysSince.this);
+                horz.setHorizontalGravity(1);
+                //prac[pracnums] = new pracClass();
+                horz.addView(practext);
+                horz.addView(pracbtn);
+
+                layout1.addView(horz);
+                break;
+            //    should move into dialog window
+            case R.id.resetbtn:
+                clearData();
+                days.setText("0");
+                hours.setText("00");
+                mins.setText("00");
+                secs.setText("00");
+                seconds = 0;
+                minutes = 0;
+                hourss = 0;
+                dayss = 0;
+                years = 0;
+                pauseTimer();
+                newtime.setText("NEW");
+                break;
+            //    should move into dialog window
+            case R.id.newbtn:
+                if (mTimerRunning) {
+                    pauseTimer();
+                    newtime.setText("NEW");
+                } else {
+
+                    myTime = Calendar.getInstance();
+                    years = 0;
+                    dayss = 0;
+                    hourss = 0;
+                    minutes = 0;
+                    seconds = 0;
+
+                    updateData();
+                    startTimer();
+                    newtime.setText("STOP");
+                    break;
+
+                }
+        }
+    }
+
+    private void openDialog() {
+        exampledialog mydialog = new exampledialog();
+        mydialog.show(getSupportFragmentManager(), "edittimer");
+    }
+
+    @Override
+    public void applytext(String num) {
+        currnum.setText(num);
+    }
 }
 
 
