@@ -41,6 +41,8 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
     private Button resettime;
     private Button newtime;
     private Button add;
+    private Button myreset;
+    private Button mynew;
     private int seconds = 0;    //for updating clk
     private int minutes = 0;    //for updating clk
     private int hourss = 0;     //for updating clk
@@ -55,10 +57,13 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
     private ScrollView scroll;
     private LinearLayout layout1;
     private LinearLayout layout2;
+    private LinearLayout[] horz = new LinearLayout[20];
+
+
 
     private daysClass[] mme = new daysClass[50];
     //mme[0] = new daysClass();
-    private pracClass[] prac = new pracClass[10];
+    private pracClass[] prac = new pracClass[20];
 
     private int testingnum = 0;
     private TextView practextpop;
@@ -183,7 +188,8 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
             }
         });
         */
-
+//myreset.setOnClickListener(this);
+//mynew.setOnClickListener(this);
         add.setOnClickListener(this);
         resettime.setOnClickListener(this);
         newtime.setOnClickListener(this);
@@ -322,30 +328,38 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
 
         currentTime = Calendar.getInstance();
         years = currentTime.get(Calendar.YEAR) - Integer.parseInt(String.valueOf(year1));
-        if(currentTime.get(Calendar.DAY_OF_YEAR) < Integer.parseInt(String.valueOf(day1))){
-            years = years - 1;
-            dayss = 365 + currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
-        }else{
-            dayss = currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
-        }
-        if(currentTime.get(Calendar.HOUR_OF_DAY) < Integer.parseInt(String.valueOf(hour1))){
-            dayss = dayss - 1;
-            hourss = 24 + currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
-        }else{
-            hourss = currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
-        }
-        if(currentTime.get(Calendar.MINUTE) < Integer.parseInt(String.valueOf(min1))){
-            hourss = hourss - 1;
-            minutes = 60 + currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
-        }else{
-            minutes = currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
-        }
-        if(currentTime.get(Calendar.SECOND) < Integer.parseInt(String.valueOf(sec1))){
+        dayss = currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
+        hourss = currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
+        minutes = currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
+        seconds = currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
+
+        /*currentTime = Calendar.getInstance();     //uncomment to Troubleshoot
+        years = currentTime.get(Calendar.YEAR) - 2019;
+        dayss = currentTime.get(Calendar.DAY_OF_YEAR) - 150;
+        hourss = currentTime.get(Calendar.HOUR_OF_DAY) - 22;
+        minutes = currentTime.get(Calendar.MINUTE) - 22;
+        seconds = currentTime.get(Calendar.SECOND) - 0;*/
+
+        if (seconds < 0){
             minutes = minutes - 1;
-            seconds = 60 + currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
-        }else{
-            seconds = currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
+            seconds = 60 + seconds;
         }
+        if (minutes < 0){
+            hourss = hourss - 1;
+            minutes = 60 + minutes;
+        }
+        if (hourss < 0){
+            dayss = dayss - 1;
+            hourss = 24 + hourss;
+        }
+         if (dayss < 0){
+            years = years - 1;
+            dayss = 365 + dayss;
+        }
+        //if (hourss == -1)
+            //hourss = 0;
+        //if (minutes == -1)
+           // minutes = 0;
 
     }
 
@@ -355,10 +369,30 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         switch (v.getId()) {
             //edit buttons for all the different timers: open the details with openDialog(). pass details into dialog
-            case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
-                openDialog();
+            case 0: case 1: case 2: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+                //openDialog(); //opens pop up menu
                 Toast.makeText(this, Integer.toString(prac[v.getId()].getnum()), Toast.LENGTH_SHORT).show();
+                //prac[3].closelayout();
+                closeLayouts();
                 break;
+            case 3:
+                Toast.makeText(this, Integer.toString(prac[v.getId()].getnum()), Toast.LENGTH_SHORT).show();
+                closeLayouts();
+
+                Button btn = new Button(this);
+                btn.setText("reset 3 ");
+                btn.setHeight(50);
+                btn.setWidth(200);
+                btn.setOnClickListener(this);
+                Button btn2 = new Button(this);
+                btn2.setText("stop 3 ");
+                btn2.setHeight(50);
+                btn2.setWidth(200);
+                btn2.setOnClickListener(this);
+                prac[3].openlayout(btn,btn2);
+
+                break;
+
             //"add new" button: adds a new timer with details and edit button
             case R.id.add:
                 pracnums++;
@@ -366,24 +400,75 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                // int[] gay = new int[100];
                // gay[pracnums] = pracnums;
 
-                TextView practext = new TextView(daysSince.this);
-                practext.setText(Integer.toString(pracnums));
+                String formatstuff = String.format("%02d      ", pracnums + 6);
 
-                Button pracbtn = new Button(daysSince.this);
-                pracbtn.setOnClickListener(this);
-                pracbtn.setText("edit" + Integer.toString(pracnums));
-                pracbtn.setWidth(200);
-                pracbtn.setId(pracnums);
-                pracbtn.setOnClickListener(this);
-                prac[pracnums] = new pracClass(pracnums, pracbtn);
+                TextView multiday = new TextView(daysSince.this);
+                multiday.setText("Days: " + formatstuff);
+                TextView multihour = new TextView(daysSince.this);
+                multihour.setText("Hours: " + formatstuff);
+                TextView multimin = new TextView(daysSince.this);
+                multimin.setText("Mins: " + formatstuff);
+                TextView multisec = new TextView(daysSince.this);
+                multisec.setText("Secs: " + formatstuff);
+
+
+                //Button pracbtn = new Button(daysSince.this);
+                //pracbtn.setOnClickListener(this);
+                //pracbtn.setText("edit" + Integer.toString(pracnums));
+                //pracbtn.setWidth(200);
+                //pracbtn.setId(pracnums);
+                //pracbtn.setOnClickListener(this);
+
+
 
                 LinearLayout horz = new LinearLayout(daysSince.this);
-                horz.setHorizontalGravity(1);
+                //horz.setHorizontalGravity(1);
+                horz.setOnClickListener(this);
+                horz.setId(pracnums);
+
+                horz.setPadding(20,20,20,20);
+                //horz.setDividerPadding(100);
                 //prac[pracnums] = new pracClass();
-                horz.addView(practext);
-                horz.addView(pracbtn);
+                horz.addView(multiday);
+                horz.addView(multihour);
+                horz.addView(multimin);
+                horz.addView(multisec);
+                //horz.addView(pracbtn);
+
+                LinearLayout horz2 = new LinearLayout(daysSince.this);
+                horz2.setPadding(0,0,0,0);
 
                 layout1.addView(horz);
+                layout1.addView(horz2);
+                prac[pracnums] = new pracClass(pracnums, horz2);
+/*
+               // pracnums++;
+
+                LinearLayout horznum2 = new LinearLayout(daysSince.this);
+                horz[pracnums].setOnClickListener(this);
+               horz[pracnums].setPadding(20,20,20,20);
+
+               // prac[pracnums] = new pracClass(pracnums);
+
+                //String formatstuff = String.format("%d      ", pracnums);
+
+                //TextView multiday = new TextView(daysSince.this);
+               // multiday.setText(formatstuff);
+               // TextView multihour = new TextView(daysSince.this);
+                //multihour.setText(formatstuff);
+                //TextView multimin = new TextView(daysSince.this);
+               // multimin.setText(formatstuff);
+                //TextView multisec = new TextView(daysSince.this);
+               // multisec.setText(formatstuff);
+
+                //horz[pracnums].addView(multiday);
+               // horz[pracnums].addView(multihour);
+               // horz[pracnums].addView(multimin);
+               // horz[pracnums].addView(multisec);
+                layout1.addView(horz[pracnums]);
+
+               pracnums++;
+               */
                 break;
             //    should move into dialog window
             case R.id.resetbtn:
@@ -423,14 +508,19 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    private void openDialog() {
+    private void openDialog() { //used for popup menu
         exampledialog mydialog = new exampledialog();
         mydialog.show(getSupportFragmentManager(), "edittimer");
     }
 
     @Override
-    public void applytext(String num) {
+    public void applytext(String num) { //used for popup menu
         currnum.setText(num);
+    }
+    public void closeLayouts(){
+        for(int x = 1; x < pracnums; x++){
+            prac[x].closelayout();
+        }
     }
 }
 
