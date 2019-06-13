@@ -1,9 +1,22 @@
 <resources>
-    <string name="app_name">days since</string>
+    <string name="app_name">Days Since</string>
     <string name="sec">dopemz.dayssince.sec</string>
     <string name="min">dopemz.dayssince.min</string>
     <string name="hour">dopemz.dayssince.hour</string>
     <string name="day">dopemz.dayssince.day</string>
     <string name="year">dopemz.dayssince.year</string>
     <string name="mytext">dopemz.dayssince.mytext</string>
+    <string name="num">dopemz.dayssince.num</string>
+    <string name="sec2">dopemz.dayssince.sec</string>
+    <string name="min2">dopemz.dayssince.min</string>
+    <string name="hour2">dopemz.dayssince.hour</string>
+    <string name="day2">dopemz.dayssince.day</string>
+    <string name="year2">dopemz.dayssince.year</string>
+    <string name="mytext2">dopemz.dayssince.mytext</string>
+    <string name="sec3">dopemz.dayssince.sec</string>
+    <string name="min3">dopemz.dayssince.min</string>
+    <string name="hour3">dopemz.dayssince.hour</string>
+    <string name="day3">dopemz.dayssince.day</string>
+    <string name="year3">dopemz.dayssince.year</string>
+    <string name="mytext3">dopemz.dayssince.mytext</string>
 </resources>
