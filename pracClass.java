@@ -15,15 +15,16 @@ public class pracClass{
     private Button btn;
     private LinearLayout mylayout2;
     private LinearLayout mylayout1;
-    //private int mylayout;
     private boolean open;
     private boolean running;
     private boolean alive;
     private Calendar mytime;
 
     public pracClass(){
-        mynum = 100;
-        myname = null;
+        mytime = Calendar.getInstance();
+        mynum = 400;
+        mylayout1 = null;
+        mylayout2 = null;
 
     }
 
@@ -39,17 +40,26 @@ public class pracClass{
         mytime = time;
     }
 
+    public Calendar getMytime(){return mytime;}
+    public int getMynum(){return mynum;}
+    public LinearLayout getMylayout1(){return mylayout1;}
+    public LinearLayout getMylayout2(){return mylayout2;}
+
+
     public int getnum(){
         return mynum;
     }
+    public void updatenum(int newnumber){
+        mynum = newnumber;
+    }
 
+    public void updatelayout(){
+        mylayout1.setId(mynum);
+    }
     public LinearLayout getlayout(){
         return mylayout2;
     }
 
-    /*public int getlayout(){
-        return mylayout;
-    }*/
 
     public void openlayout(Button button, Button button2, Button button3){
         open = true;
