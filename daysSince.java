@@ -153,6 +153,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         add.setOnClickListener(this);
         resettime.setOnClickListener(this);
         newtime.setOnClickListener(this);
+        //startTimer();
     }
 //--------------------------------------------------------------------------------CREATE------------------------------------------------
 //***************************************************************************************MAIN***************************************************
@@ -200,7 +201,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
             startTimer();
             newtime.setText("STOP");
         }else{
-            //clearData(1);
+            clearData(1);
             days.setText("0");
             hours.setText("00");
             mins.setText("00");
@@ -248,8 +249,10 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
 
     }
     private void updateData(){
-        //get times from mytime, txt from txtbox, save it to xml in mem
+        //get times from mytime, save it to xml in mem
 //1
+        myTime = Calendar.getInstance();
+
         String year1 = Integer.toString(myTime.get(Calendar.YEAR));
         meditor.putString(getString(R.string.year), year1);
         meditor.commit();
@@ -269,6 +272,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         String sec1 = Integer.toString(myTime.get(Calendar.SECOND));
         meditor.putString(getString(R.string.sec), sec1);
         meditor.commit();
+        /*
 //2
         String year2 = Integer.toString(myTime2.get(Calendar.YEAR));
         meditor.putString(getString(R.string.year2), year2);
@@ -309,7 +313,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         String sec3 = Integer.toString(myTime3.get(Calendar.SECOND));
         meditor.putString(getString(R.string.sec3), sec3);
         meditor.commit();
-
+*/
     }
     private void savetxt(){
         String text1 = txt1.getText().toString();
@@ -548,7 +552,10 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 btna.setWidth(200);
                 btna.setOnClickListener(this);
                 //Button btna2 = new Button(this);
+                if(!prac[v.getId()].isitrunning())
                 btna2.setText("new " + v.getId());
+                else
+                    btna2.setText("stop " + v.getId());
                 btna2.setHeight(50);
                 btna2.setWidth(200);
                 btna2.setOnClickListener(this);
@@ -569,7 +576,10 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 btna.setWidth(200);
                 btna.setOnClickListener(this);
                 //Button btnb2 = new Button(this);
-                btna2.setText("new 2 ");
+                if(!prac[v.getId()].isitrunning())
+                    btna2.setText("new " + v.getId());
+                else
+                    btna2.setText("stop " + v.getId());
                 btna2.setHeight(50);
                 btna2.setWidth(200);
                 btna2.setOnClickListener(this);
@@ -590,7 +600,10 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 btna.setWidth(200);
                 btna.setOnClickListener(this);
                 //Button btnc2 = new Button(this);
-                btna2.setText("new 3 ");
+                if(!prac[v.getId()].isitrunning())
+                    btna2.setText("new " + v.getId());
+                else
+                    btna2.setText("stop " + v.getId());
                 btna2.setHeight(50);
                 btna2.setWidth(200);
                 btna2.setOnClickListener(this);
@@ -631,16 +644,18 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
             case 801:
                 //btna2
                 //look through all the prac classes, see whose opened.
-                //copy new btn
+                //copy new/stop btn
                 for(int x = 1; x < pracnums; x++){
                     if(prac[x].isitopen()){
+                       // clearData(x);
                         if (prac[x].isitrunning()) {
-                            prac[x].notrunning();
+                            //prac[x].notrunning();
                             btna2.setText("new " + x);
                         }else {
-                            prac[x].newtime(Calendar.getInstance());
-                            updateData();
-                            prac[x].isrunning();
+
+                            //prac[x].newtime(Calendar.getInstance());
+                            //updateData();
+                            //prac[x].isrunning();
                             btna2.setText("stop " + x);
                         }
                     }
@@ -741,16 +756,6 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         TextView multisec = new TextView(daysSince.this);
         multisec.setText("Secs: " + formatstuff);
 
-
-        //Button pracbtn = new Button(daysSince.this);
-        //pracbtn.setOnClickListener(this);
-        //pracbtn.setText("edit" + Integer.toString(pracnums));
-        //pracbtn.setWidth(200);
-        //pracbtn.setId(pracnums);
-        //pracbtn.setOnClickListener(this);
-
-
-
         LinearLayout horz = new LinearLayout(daysSince.this);
         //horz.setHorizontalGravity(1);
         horz.setOnClickListener(this);
@@ -772,6 +777,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         layout1.addView(horz2);
         prac[newpracnums] = new pracClass(Calendar.getInstance(), newpracnums, horz, horz2);
         prac[newpracnums].isalive();
+        prac[newpracnums].notrunning();
     }
 }
 
