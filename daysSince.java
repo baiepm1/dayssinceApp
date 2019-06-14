@@ -73,7 +73,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
     private ScrollView scroll;
     private LinearLayout layout1;
     private LinearLayout layout2;
-    private LinearLayout[] horz = new LinearLayout[20];
+    private LinearLayout[] horz = new LinearLayout[50];
 
     private Button btna;
 
@@ -85,7 +85,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
 
     private daysClass[] mme = new daysClass[50];
     //mme[0] = new daysClass();
-    private pracClass[] prac = new pracClass[20];
+    private pracClass[] prac = new pracClass[50];
 
     private int testingnum = 0;
     private TextView practextpop;
@@ -137,6 +137,11 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         mprefs = PreferenceManager.getDefaultSharedPreferences(this);
         meditor = mprefs.edit();
 
+        //for(int i = 0; i < 50; i++){
+        //    prac[i] = new pracClass();
+        //}
+
+
         //pracnums = 0;
 
 ///----------------------------------
@@ -181,11 +186,11 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
 
         //pracnums = 0;
 
-        if (pracnums > 0){
+        /*if (pracnums > 0){
             for(int i = 1; i <= pracnums; i++){
                 newlayout(i);
             }
-        }
+        }*/
         //numOfTimers = Integer.parseInt(timernum);
        // currnum.setText(Integer.toString(numOfTimers));
 
@@ -195,7 +200,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
             startTimer();
             newtime.setText("STOP");
         }else{
-            clearData(1);
+            //clearData(1);
             days.setText("0");
             hours.setText("00");
             mins.setText("00");
@@ -599,9 +604,15 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
 
             //"add new" button: adds a new timer with details and edit button
             case R.id.add:
-                pracnums++;
-                //pracnums = 0;
-                newlayout(pracnums);
+                if (pracnums < 20) {
+                    pracnums++;
+                    //pracnums = 0;
+                    newlayout(pracnums);
+                }
+                else{
+                    pracnums = 20;
+                    Toast.makeText(this, "can only have 20", Toast.LENGTH_SHORT).show();
+                }
 
                 break;
             case 800:
@@ -636,16 +647,29 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 }
                 break;
             case 802:
-                //btna2
                 //look through all the prac classes, see whose opened.
                 //make delete btn
-                for(int x = 1; x < pracnums; x++){
+                int fill = 0;
+                for(int x = 1; x <= pracnums; x++){
                     if(prac[x].isitopen()){
                     clearData(x);
                     prac[x].notrunning();
                     prac[x].deleteme();
+                    //pracnums--;
+                   // fill = x;
+                    for (int c = x; c < pracnums; c++){
+                        prac[c] = prac[c + 1];
+                        prac[c].updatenum(c);
+                        prac[c].updatelayout();
+                    }
+
                     }
                 }
+
+                //clearData(pracnums);
+                //prac[pracnums].notrunning();
+                //prac[pracnums].deleteme();
+                pracnums--;
                 break;
             //    should move into dialog window
             case R.id.resetbtn:
