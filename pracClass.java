@@ -11,7 +11,7 @@ import java.util.Calendar;
 public class pracClass{
 
     private TextView myname;
-    private int mynum;
+    private int mynum, days, hours, mins, secs;
     private Button btn;
     private LinearLayout mylayout2;
     private LinearLayout mylayout1;
@@ -19,10 +19,10 @@ public class pracClass{
     private boolean running;
     private boolean alive;
     private Calendar mytime;
-    private TextView days;
-    private TextView hours;
-    private TextView mins;
-    private TextView secs;
+    private TextView dtxt;
+    private TextView htxt;
+    private TextView mtxt;
+    private TextView stxt;
 
     public pracClass(){
         mytime = Calendar.getInstance();
@@ -39,17 +39,21 @@ public class pracClass{
         mylayout1 = layout1;
         mylayout2 = layout2;
 
-        days = d;
-        hours = h;
-        mins = m;
-        secs = s;
+        dtxt = d;
+        htxt = h;
+        mtxt = m;
+        stxt = s;
     }
 
     public void newtime(Calendar time){
         mytime = time;
     }
 
-    public Calendar getMytime(){return mytime;}
+    public Calendar gettime(){
+        return mytime;
+    }
+
+    //public Calendar getMytime(){return mytime;}
     public int getMynum(){return mynum;}
     public LinearLayout getMylayout1(){return mylayout1;}
     public LinearLayout getMylayout2(){return mylayout2;}
@@ -118,6 +122,27 @@ public class pracClass{
     }
     public boolean isitalive(){
         return alive;
+    }
+
+    public void setTime(){
+        String secsleftformat = String.format("%02d", secs);
+        String minsleftformat = String.format("%02d", mins);
+        String hoursleftformat = String.format("%02d", hours);
+        stxt.setText("     " + secsleftformat + "     ");
+        mtxt.setText("     " + minsleftformat + "     ");
+        htxt.setText("     " + hoursleftformat+ "     ");
+        dtxt.setText("     " + Integer.toString(days) + "     ");
+
+        //dtxt.setText(Integer.toString(days));
+        //htxt.setText(Integer.toString(hours));
+        //mtxt.setText(Integer.toString(mins));
+        //stxt.setText(Integer.toString(secs));
+    }
+    public void updatenums(int day, int hour, int min, int sec){
+        days = day;
+        hours = hour;
+        mins = min;
+        secs = sec;
     }
 
 }
