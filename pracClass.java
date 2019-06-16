@@ -19,6 +19,10 @@ public class pracClass{
     private boolean running;
     private boolean alive;
     private Calendar mytime;
+    private TextView days;
+    private TextView hours;
+    private TextView mins;
+    private TextView secs;
 
     public pracClass(){
         mytime = Calendar.getInstance();
@@ -28,12 +32,17 @@ public class pracClass{
 
     }
 
-    public pracClass(Calendar time, int nums, LinearLayout layout1, LinearLayout layout2){
+    public pracClass(Calendar time, int nums, LinearLayout layout1, LinearLayout layout2, TextView d, TextView h, TextView m, TextView s){
         mytime = time;
         mynum = nums;
         //btn = mybtn;
         mylayout1 = layout1;
         mylayout2 = layout2;
+
+        days = d;
+        hours = h;
+        mins = m;
+        secs = s;
     }
 
     public void newtime(Calendar time){
