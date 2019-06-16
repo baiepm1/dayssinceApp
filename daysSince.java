@@ -145,7 +145,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         //pracnums = 0;
 
 ///----------------------------------
-        //checkprefs();   //if there is data saved, run clock on app startup
+        checkprefs();   //if there is data saved, run clock on app startup
 //-----------------------------------
 
 //myreset.setOnClickListener(this);
@@ -153,7 +153,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         add.setOnClickListener(this);
         resettime.setOnClickListener(this);
         newtime.setOnClickListener(this);
-        //startTimer();
+        startTimer();
     }
 //--------------------------------------------------------------------------------CREATE------------------------------------------------
 //***************************************************************************************MAIN***************************************************
@@ -194,11 +194,11 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         }*/
         //numOfTimers = Integer.parseInt(timernum);
        // currnum.setText(Integer.toString(numOfTimers));
-
+/*
         if(year1 != "" || day1 != "" || hour1 != "" || min1 != ""  || sec1 != "" ){
             fillClk();
             //prac1.setText(Integer.toString(currentTime.get(Calendar.DAY_OF_YEAR)));
-            startTimer();
+            //startTimer();
             newtime.setText("STOP");
         }else{
             clearData(1);
@@ -212,7 +212,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
             hourss1 = 0;
             dayss1 = 0;
             years1 = 0;
-        }
+        }*/
     }
     private void startTimer() {
         mTimerRunning = true;
@@ -426,28 +426,29 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         }
         btna2.setText("new " + clean);
     }
-    private void fillClk(){
-        if(prac[1].isitrunning()) {
+    private void fillClk() {
+        //if(prac[1].isitrunning()) {
 //1
-            String year1 = mprefs.getString(getString(R.string.year), "");
-            String day1 = mprefs.getString(getString(R.string.day), "");
-            String hour1 = mprefs.getString(getString(R.string.hour), "");
-            String min1 = mprefs.getString(getString(R.string.min), "");
-            String sec1 = mprefs.getString(getString(R.string.sec), "");
+        String year1 = mprefs.getString(getString(R.string.year), "");
+        String day1 = mprefs.getString(getString(R.string.day), "");
+        String hour1 = mprefs.getString(getString(R.string.hour), "");
+        String min1 = mprefs.getString(getString(R.string.min), "");
+        String sec1 = mprefs.getString(getString(R.string.sec), "");
 
-            currentTime = Calendar.getInstance();
+        currentTime = Calendar.getInstance();
+        if (year1 != "" || day1 != "" || hour1 != "" || min1 != "" || sec1 != ""){
             years1 = currentTime.get(Calendar.YEAR) - Integer.parseInt(String.valueOf(year1));
             dayss1 = currentTime.get(Calendar.DAY_OF_YEAR) - Integer.parseInt(String.valueOf(day1));
             hourss1 = currentTime.get(Calendar.HOUR_OF_DAY) - Integer.parseInt(String.valueOf(hour1));
             minutes1 = currentTime.get(Calendar.MINUTE) - Integer.parseInt(String.valueOf(min1));
             seconds1 = currentTime.get(Calendar.SECOND) - Integer.parseInt(String.valueOf(sec1));
 
-        /*currentTime = Calendar.getInstance();     //uncomment to Troubleshoot
-        years = currentTime.get(Calendar.YEAR) - 2019;
-        dayss = currentTime.get(Calendar.DAY_OF_YEAR) - 150;
-        hourss = currentTime.get(Calendar.HOUR_OF_DAY) - 22;
-        minutes = currentTime.get(Calendar.MINUTE) - 22;
-        seconds = currentTime.get(Calendar.SECOND) - 0;*/
+            /*currentTime = Calendar.getInstance();     //uncomment to Troubleshoot
+            years = currentTime.get(Calendar.YEAR) - 2019;
+            dayss = currentTime.get(Calendar.DAY_OF_YEAR) - 150;
+            hourss = currentTime.get(Calendar.HOUR_OF_DAY) - 22;
+            minutes = currentTime.get(Calendar.MINUTE) - 22;
+            seconds = currentTime.get(Calendar.SECOND) - 0;*/
 
             if (seconds1 < 0) {
                 minutes1 = minutes1 - 1;
@@ -464,9 +465,11 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
             if (dayss1 < 0) {
                 years1 = years1 - 1;
                 dayss1 = 365 + dayss1;
-            }
-        }
-        if(prac[2].isitrunning()) {
+             }
+    }
+        //}
+        //if(prac[2].isitrunning()) {
+        /*
 //2
             String year2 = mprefs.getString(getString(R.string.year2), "");
             String day2 = mprefs.getString(getString(R.string.day2), "");
@@ -496,8 +499,8 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 years2 = years2 - 1;
                 dayss2 = 365 + dayss2;
             }
-        }
-        if(prac[3].isitrunning()) {
+        //}
+        //if(prac[3].isitrunning()) {
 //3
             String year3 = mprefs.getString(getString(R.string.year3), "");
             String day3 = mprefs.getString(getString(R.string.day3), "");
@@ -527,7 +530,8 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 years3 = years3 - 1;
                 dayss3 = 365 + dayss3;
             }
-        }
+        //}
+        */
     }
 
 
@@ -775,7 +779,7 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
 
         layout1.addView(horz);
         layout1.addView(horz2);
-        prac[newpracnums] = new pracClass(Calendar.getInstance(), newpracnums, horz, horz2);
+        prac[newpracnums] = new pracClass(Calendar.getInstance(), newpracnums, horz, horz2, multiday, multihour, multimin, multisec);
         prac[newpracnums].isalive();
         prac[newpracnums].notrunning();
     }
