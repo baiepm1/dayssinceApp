@@ -1,22 +1,100 @@
 <resources>
 <string name="app_name">Days Since</string>
-<string name="sec">dopemz.dayssince.sec</string>
-<string name="min">dopemz.dayssince.min</string>
-<string name="hour">dopemz.dayssince.hour</string>
-<string name="day">dopemz.dayssince.day</string>
-<string name="year">dopemz.dayssince.year</string>
-<string name="mytext">dopemz.dayssince.mytext</string>
+<string name="sec1">dopemz.dayssince.sec1</string>
+<string name="min1">dopemz.dayssince.min1</string>
+<string name="hour1">dopemz.dayssince.hour1</string>
+<string name="day1">dopemz.dayssince.day1</string>
+<string name="year1">dopemz.dayssince.year1</string>
+<string name="run1">dopemz.dayssince.run1</string>
+<string name="mytext1">dopemz.dayssince.mytext1</string>
+
 <string name="num">dopemz.dayssince.num</string>
+
 <string name="sec2">dopemz.dayssince.sec2</string>
 <string name="min2">dopemz.dayssince.min2</string>
 <string name="hour2">dopemz.dayssince.hour2</string>
 <string name="day2">dopemz.dayssince.day2</string>
 <string name="year2">dopemz.dayssince.year2</string>
+<string name="run2">dopemz.dayssince.run2</string>
 <string name="mytext2">dopemz.dayssince.mytext2</string>
+
 <string name="sec3">dopemz.dayssince.sec3</string>
 <string name="min3">dopemz.dayssince.min3</string>
 <string name="hour3">dopemz.dayssince.hour3</string>
 <string name="day3">dopemz.dayssince.day3</string>
 <string name="year3">dopemz.dayssince.year3</string>
+<string name="run3">dopemz.dayssince.run3</string>
 <string name="mytext3">dopemz.dayssince.mytext3</string>
+
+    <string name="sec4">dopemz.dayssince.sec4</string>
+    <string name="min4">dopemz.dayssince.min4</string>
+    <string name="hour4">dopemz.dayssince.hour4</string>
+    <string name="day4">dopemz.dayssince.day4</string>
+    <string name="year4">dopemz.dayssince.year4</string>
+    <string name="run4">dopemz.dayssince.run4</string>
+    <string name="mytext4">dopemz.dayssince.mytext4</string>
+
+    <string name="sec5">dopemz.dayssince.sec5</string>
+    <string name="min5">dopemz.dayssince.min5</string>
+    <string name="hour5">dopemz.dayssince.hour5</string>
+    <string name="day5">dopemz.dayssince.day5</string>
+    <string name="year5">dopemz.dayssince.year5</string>
+    <string name="run5">dopemz.dayssince.run5</string>
+    <string name="mytext5">dopemz.dayssince.mytext5</string>
+
+    <string name="sec6">dopemz.dayssince.sec6</string>
+    <string name="min6">dopemz.dayssince.min6</string>
+    <string name="hour6">dopemz.dayssince.hour6</string>
+    <string name="day6">dopemz.dayssince.day6</string>
+    <string name="year6">dopemz.dayssince.year6</string>
+    <string name="run6">dopemz.dayssince.run6</string>
+    <string name="mytext6">dopemz.dayssince.mytext6</string>
+
+    <string name="sec7">dopemz.dayssince.sec7</string>
+    <string name="min7">dopemz.dayssince.min7</string>
+    <string name="hour7">dopemz.dayssince.hour7</string>
+    <string name="day7">dopemz.dayssince.day7</string>
+    <string name="year7">dopemz.dayssince.year7</string>
+    <string name="run7">dopemz.dayssince.run7</string>
+    <string name="mytext7">dopemz.dayssince.mytext7</string>
+
+    <string name="sec8">dopemz.dayssince.sec8</string>
+    <string name="min8">dopemz.dayssince.min8</string>
+    <string name="hour8">dopemz.dayssince.hour8</string>
+    <string name="day8">dopemz.dayssince.day8</string>
+    <string name="year8">dopemz.dayssince.year8</string>
+    <string name="run8">dopemz.dayssince.run8</string>
+    <string name="mytext8">dopemz.dayssince.mytext8</string>
+
+    <string name="sec9">dopemz.dayssince.sec9</string>
+    <string name="min9">dopemz.dayssince.min9</string>
+    <string name="hour9">dopemz.dayssince.hour9</string>
+    <string name="day9">dopemz.dayssince.day9</string>
+    <string name="year9">dopemz.dayssince.year9</string>
+    <string name="run9">dopemz.dayssince.run9</string>
+    <string name="mytext9">dopemz.dayssince.mytext9</string>
+
+    <string name="sec10">dopemz.dayssince.sec10</string>
+    <string name="min10">dopemz.dayssince.min10</string>
+    <string name="hour10">dopemz.dayssince.hour10</string>
+    <string name="day10">dopemz.dayssince.day10</string>
+    <string name="year10">dopemz.dayssince.year10</string>
+    <string name="run10">dopemz.dayssince.run10</string>
+    <string name="mytext10">dopemz.dayssince.mytext10</string>
+
+    <string name="sec11">dopemz.dayssince.sec11</string>
+    <string name="min11">dopemz.dayssince.min11</string>
+    <string name="hour11">dopemz.dayssince.hour11</string>
+    <string name="day11">dopemz.dayssince.day11</string>
+    <string name="year11">dopemz.dayssince.year11</string>
+    <string name="run11">dopemz.dayssince.run11</string>
+    <string name="mytext11">dopemz.dayssince.mytext11</string>
+
+    <string name="sec12">dopemz.dayssince.sec12</string>
+    <string name="min12">dopemz.dayssince.min12</string>
+    <string name="hour12">dopemz.dayssince.hour12</string>
+    <string name="day12">dopemz.dayssince.day12</string>
+    <string name="year12">dopemz.dayssince.year12</string>
+    <string name="run12">dopemz.dayssince.run12</string>
+    <string name="mytext12">dopemz.dayssince.mytext12</string>
 </resources>
