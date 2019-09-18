@@ -90,7 +90,7 @@ public class pracClass{
     }
 
     public void deleteme(){
-        alive = false;
+        //alive = false;
         //closelayout();
         mylayout1.removeAllViews();
         //mylayout1.setMinimumHeight(0);
