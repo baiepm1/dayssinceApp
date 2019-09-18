@@ -344,12 +344,17 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
         mme[0].updatenums(dayarray[1], hourarray[1], minarray[1], secarray[1]);
         mme[0].setTime();
 
-        prac[1].updatenums(dayarray[1], hourarray[1], minarray[1], secarray[1]);
-        prac[1].setTime();
-        prac[2].updatenums(dayarray[2], hourarray[2], minarray[2], secarray[2]);
-        prac[2].setTime();
-        prac[3].updatenums(dayarray[3], hourarray[3], minarray[3], secarray[3]);
-        prac[3].setTime();
+        //prac[1].updatenums(dayarray[1], hourarray[1], minarray[1], secarray[1]);
+        //prac[1].setTime();
+        //prac[2].updatenums(dayarray[2], hourarray[2], minarray[2], secarray[2]);
+        //prac[2].setTime();
+        //prac[3].updatenums(dayarray[3], hourarray[3], minarray[3], secarray[3]);
+        //prac[3].setTime();
+
+        for(int x = 1; x <= pracnums; x++){
+            prac[x].updatenums(dayarray[x], hourarray[x], minarray[x], secarray[x]);
+            prac[x].setTime();
+        }
 
         String secsleftformat = String.format("%02d", secarray[1]);
         String minsleftformat = String.format("%02d", minarray[1]);
@@ -364,97 +369,73 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
     private void updateData(int num) {
         //get times from mytime, save it to xml in mem
 
-        //switch (num) {
 
-        //case 1:
-//1
-        if (prac[num].isitrunning()) {
-            good[num] = 1;
-        } else
-            good[num] = 0;
+        if (num == 999){
+            //num = 1;
+            for(num = 1; num < pracnums; num++){
+                if (prac[num].isitrunning()) {
+                    good[num] = 1;
+                } else
+                    good[num] = 0;
 
-        String year1 = Integer.toString(prac[num].gettime().get(Calendar.YEAR));
-        meditor.putString(yearstrings[num], year1);
-        meditor.commit();
+                String year1 = Integer.toString(prac[num].gettime().get(Calendar.YEAR));
+                meditor.putString(yearstrings[num], year1);
+                meditor.commit();
 
-        String day1 = Integer.toString(prac[num].gettime().get(Calendar.DAY_OF_YEAR));
-        meditor.putString(daystrings[num], day1);
-        meditor.commit();
+                String day1 = Integer.toString(prac[num].gettime().get(Calendar.DAY_OF_YEAR));
+                meditor.putString(daystrings[num], day1);
+                meditor.commit();
 
-        String hour1 = Integer.toString(prac[num].gettime().get(Calendar.HOUR_OF_DAY));
-        meditor.putString(hourstrings[num], hour1);
-        meditor.commit();
+                String hour1 = Integer.toString(prac[num].gettime().get(Calendar.HOUR_OF_DAY));
+                meditor.putString(hourstrings[num], hour1);
+                meditor.commit();
 
-        String min1 = Integer.toString(prac[num].gettime().get(Calendar.MINUTE));
-        meditor.putString(minstrings[num], min1);
-        meditor.commit();
+                String min1 = Integer.toString(prac[num].gettime().get(Calendar.MINUTE));
+                meditor.putString(minstrings[num], min1);
+                meditor.commit();
 
-        String sec1 = Integer.toString(prac[num].gettime().get(Calendar.SECOND));
-        meditor.putString(secstrings[num], sec1);
-        meditor.commit();
+                String sec1 = Integer.toString(prac[num].gettime().get(Calendar.SECOND));
+                meditor.putString(secstrings[num], sec1);
+                meditor.commit();
 
 
-        String run1 = Integer.toString(good[num]);
-        meditor.putString(runstrings[num], run1);
-        meditor.commit();
-        // break;
+                String run1 = Integer.toString(good[num]);
+                meditor.putString(runstrings[num], run1);
+                meditor.commit();
+            }
+        }
+        else {
+            if (prac[num].isitrunning()) {
+                good[num] = 1;
+            } else
+                good[num] = 0;
 
-        //case 2:
-//2
-        /*
-            if (prac[2].isitrunning())
-                good[2] = 1;
-            else
-                good[2] = 0;
-
-            String year2 = Integer.toString(prac[2].gettime().get(Calendar.YEAR));
-            meditor.putString(getString(R.string.year2), year2);
+            String year1 = Integer.toString(prac[num].gettime().get(Calendar.YEAR));
+            meditor.putString(yearstrings[num], year1);
             meditor.commit();
 
-            String day2 = Integer.toString(prac[2].gettime().get(Calendar.DAY_OF_YEAR));
-            meditor.putString(getString(R.string.day2), day2);
+            String day1 = Integer.toString(prac[num].gettime().get(Calendar.DAY_OF_YEAR));
+            meditor.putString(daystrings[num], day1);
             meditor.commit();
 
-            String hour2 = Integer.toString(prac[2].gettime().get(Calendar.HOUR_OF_DAY));
-            meditor.putString(getString(R.string.hour2), hour2);
+            String hour1 = Integer.toString(prac[num].gettime().get(Calendar.HOUR_OF_DAY));
+            meditor.putString(hourstrings[num], hour1);
             meditor.commit();
 
-            String min2 = Integer.toString(prac[2].gettime().get(Calendar.MINUTE));
-            meditor.putString(getString(R.string.min2), min2);
+            String min1 = Integer.toString(prac[num].gettime().get(Calendar.MINUTE));
+            meditor.putString(minstrings[num], min1);
             meditor.commit();
 
-            String sec2 = Integer.toString(prac[2].gettime().get(Calendar.SECOND));
-            meditor.putString(getString(R.string.sec2), sec2);
+            String sec1 = Integer.toString(prac[num].gettime().get(Calendar.SECOND));
+            meditor.putString(secstrings[num], sec1);
             meditor.commit();
 
-            String run2 = Integer.toString(good[2]);
-            meditor.putString(getString(R.string.run2), run2);
+
+            String run1 = Integer.toString(good[num]);
+            meditor.putString(runstrings[num], run1);
             meditor.commit();
-            //break;
-            */
-//3
-        /*
-        String year3 = Integer.toString(myTime3.get(Calendar.YEAR));
-        meditor.putString(getString(R.string.year3), year3);
-        meditor.commit();
+        }
 
-        String day3 = Integer.toString(myTime3.get(Calendar.DAY_OF_YEAR));
-        meditor.putString(getString(R.string.day3), day3);
-        meditor.commit();
-
-        String hour3 = Integer.toString(myTime3.get(Calendar.HOUR_OF_DAY));
-        meditor.putString(getString(R.string.hour3), hour3);
-        meditor.commit();
-
-        String min3 = Integer.toString(myTime3.get(Calendar.MINUTE));
-        meditor.putString(getString(R.string.min3), min3);
-        meditor.commit();
-
-        String sec3 = Integer.toString(myTime3.get(Calendar.SECOND));
-        meditor.putString(getString(R.string.sec3), sec3);
-        meditor.commit();
-      */
-   //}
 
     }
     private void savetxt(){
@@ -509,7 +490,8 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 dayarray[clean] = 0;
                 yeararray[clean] = 0;
 
-        btna2.setText("new " + clean);
+                if(clean != pracnums)
+                    btna2.setText("new " + clean);
     }
     private void fillClk() {
         currentTime = Calendar.getInstance();
@@ -622,23 +604,37 @@ public class daysSince extends AppCompatActivity implements View.OnClickListener
                 //btna3 (DELETE)
                 //look through all the prac classes, see whose opened.
                 //make delete btn
-                int fill = 0;
                 for(int x = 1; x <= pracnums; x++){
                     if(prac[x].isitopen()){
-                        prac[x].notrunning();
-                        clearData(x);
-                        updateData(x);
-                        prac[x].deleteme();
-                    //pracnums--;
-                   // fill = x;
+                        //prac[x].notrunning();
+                        //clearData(x);
+                        //updateData(x);
+                        //prac[x].deleteme();
+                        //prac[x].closelayout();
                     for (int c = x; c < pracnums; c++){
-                        prac[c] = prac[c + 1];
-                        prac[c].updatenum(c);
-                        prac[c].updatelayout();
+
+                       //prac[40] = prac[c];         //c gets saved to a temp
+                        //prac[c] = prac[c + 1];      //c gets filled by above
+                        //prac[c + 1] = prac[40];     //above gets filled by temp
+                        //prac[c].updatenum(c);
+                        //prac[c].updatelayout();
+                        prac[c].newtime(prac[c + 1].gettime());
+                        //clearData(c + 1);
+                        //prac[c + 1].updatenums(0,0,0,0);
+                        updateData(c);
+                        //updateData(c + 1);
                     }
 
                     }
                 }
+                //prac[pracnums].updatenums(0,0,0,0);
+                //prac[pracnums + 1].updatenums(0,0,0,0);     //for some reason one higher exists, just clear it too
+                clearData(pracnums);
+                //clearData(pracnums + 1);
+                prac[pracnums].deleteme();
+                prac[pracnums].notrunning();
+                prac[pracnums].notalive();
+                //updateData(999);     //999 == update all
                 pracnums--;
                 currnum.setText(Integer.toString(pracnums));
                 break;
